@@ -36,15 +36,15 @@ export default function HeatMapReportModal({ isOpen, onClose }: HeatMapReportMod
       hourly: [10, 8, 5, 4, 12, 35, 68, 88, 94, 92, 85, 78, 82, 86, 90, 84, 75, 62, 45, 30, 22, 18, 14, 10],
     },
     {
-      level: 'Basement 1 (B1)',
+      level: 'Basement 1',
       hourly: [15, 12, 8, 6, 18, 42, 75, 95, 98, 96, 90, 85, 88, 92, 94, 88, 80, 68, 50, 35, 25, 20, 18, 15],
     },
     {
-      level: 'Basement 2 (B2)',
+      level: 'Basement 2',
       hourly: [8, 6, 4, 3, 10, 25, 55, 78, 85, 82, 75, 70, 72, 78, 82, 75, 65, 52, 38, 25, 18, 14, 10, 8],
     },
     {
-      level: 'Basement 3 (B3)',
+      level: 'Basement 3',
       hourly: [4, 3, 2, 2, 6, 15, 35, 58, 65, 62, 55, 50, 52, 58, 62, 55, 45, 35, 25, 18, 12, 8, 6, 4],
     },
     {
@@ -219,7 +219,7 @@ export default function HeatMapReportModal({ isOpen, onClose }: HeatMapReportMod
             <div className="overflow-x-auto p-2 sm:p-3 scrollbar-thin">
               <table className="w-full min-w-[850px] text-center border-collapse text-[10px] font-mono">
                 <thead>
-                  <tr className="border-b border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400">
+                  <tr className="border-b border-white/20 bg-[#2b4695] text-white">
                     <th className="text-left py-2 px-2 text-xs font-bold w-36">Level / Deck</th>
                     {hours.map((h) => (
                       <th key={h} className="p-1 font-semibold">

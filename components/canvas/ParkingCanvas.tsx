@@ -62,6 +62,20 @@ export default function ParkingCanvas({
     setLocalSensors(sensors);
   }, [sensors]);
 
+  // Basement 3 Architectural Map Image
+  const basement3ImgRef = useRef<HTMLImageElement | null>(null);
+  const [isImgLoaded, setIsImgLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const img = new Image();
+    img.src = '/images/basement3-map.png';
+    img.onload = () => {
+      basement3ImgRef.current = img;
+      setIsImgLoaded(true);
+    };
+  }, []);
+
   // Touch pinch zoom state
   const touchDistanceRef = useRef<number | null>(null);
 
@@ -90,95 +104,193 @@ export default function ParkingCanvas({
     const floorHeight = 700;
 
     const isLight = theme === 'light';
+    const isB3 = floorName.toLowerCase().includes('basement 3') || floorName.toLowerCase().includes('b3');
 
-    // Floor Base Card
-    ctx.fillStyle = isLight ? '#f8fafc' : '#0f172a';
-    ctx.fillRect(0, 0, floorWidth, floorHeight);
+    if (isB3) {
+      // Floor Base Card for B3
+      ctx.fillStyle = isLight ? '#ffffff' : '#0f172a';
+      ctx.fillRect(0, 0, floorWidth, floorHeight);
 
-    // Subtle Grid lines
-    ctx.strokeStyle = isLight ? 'rgba(203, 213, 225, 0.6)' : 'rgba(51, 65, 85, 0.4)';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < floorWidth; x += 50) {
+      // Subtle Grid lines
+      ctx.strokeStyle = isLight ? 'rgba(203, 213, 225, 0.4)' : 'rgba(51, 65, 85, 0.3)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < floorWidth; x += 50) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, floorHeight);
+        ctx.stroke();
+      }
+      for (let y = 0; y < floorHeight; y += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(floorWidth, y);
+        ctx.stroke();
+      }
+
+      // Outer Perimeter Wall
+      ctx.strokeStyle = '#2b4695';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(4, 4, floorWidth - 8, floorHeight - 8);
+
+      // Draw the uploaded architectural floor map image
+      if (basement3ImgRef.current) {
+        const mapImg = basement3ImgRef.current;
+        const mapW = 1180;
+        const mapH = 680;
+        const mapX = (floorWidth - mapW) / 2;
+        const mapY = 10;
+        ctx.drawImage(mapImg, mapX, mapY, mapW, mapH);
+      }
+
+      // Floor Label Watermark
+      ctx.fillStyle = isLight ? 'rgba(43, 70, 149, 0.08)' : 'rgba(255, 255, 255, 0.04)';
+      ctx.font = '900 60px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('BASEMENT 3 — RADIAL PARKING DECK', floorWidth / 2, 70);
+    } else {
+      // Standard Floor Base Card
+      ctx.fillStyle = isLight ? '#f8fafc' : '#0f172a';
+      ctx.fillRect(0, 0, floorWidth, floorHeight);
+
+      // Subtle Grid lines
+      ctx.strokeStyle = isLight ? 'rgba(203, 213, 225, 0.6)' : 'rgba(51, 65, 85, 0.4)';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < floorWidth; x += 50) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, floorHeight);
+        ctx.stroke();
+      }
+      for (let y = 0; y < floorHeight; y += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(floorWidth, y);
+        ctx.stroke();
+      }
+
+      // Outer Perimeter Wall
+      ctx.strokeStyle = '#2b4695';
+      ctx.lineWidth = 4;
+      ctx.strokeRect(4, 4, floorWidth - 8, floorHeight - 8);
+
+      // Driving Aisles / Lanes
+      ctx.fillStyle = isLight ? '#e2e8f0' : '#1e293b';
+      ctx.fillRect(60, 310, floorWidth - 120, 140); // Center drive lane
+      ctx.fillRect(40, 60, 80, floorHeight - 120);   // Left drive lane
+      ctx.fillRect(floorWidth - 120, 60, 80, floorHeight - 120); // Right drive lane
+
+      // Lane dividing dashed lines
+      ctx.strokeStyle = isLight ? '#94a3b8' : 'rgba(250, 204, 21, 0.7)';
+      ctx.setLineDash([20, 15]);
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, floorHeight);
+      ctx.moveTo(120, 380);
+      ctx.lineTo(floorWidth - 120, 380);
       ctx.stroke();
+      ctx.setLineDash([]); // Reset line dash
+
+      // Directional Arrows on Driveway
+      ctx.fillStyle = isLight ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.4)';
+      ctx.font = 'bold 22px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('ENTRY ➔', 220, 380);
+      ctx.fillText('ONE WAY ➔ ➔', floorWidth / 2, 380);
+      ctx.fillText('➔ EXIT', floorWidth - 220, 380);
+
+      // Floor Label Watermark
+      ctx.fillStyle = isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.04)';
+      ctx.font = '900 80px sans-serif';
+      ctx.fillText(floorName.toUpperCase(), floorWidth / 2, 200);
     }
-    for (let y = 0; y < floorHeight; y += 50) {
-      ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(floorWidth, y);
-      ctx.stroke();
-    }
-
-    // Outer Perimeter Wall
-    ctx.strokeStyle = isLight ? '#6366f1' : '#38bdf8';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(4, 4, floorWidth - 8, floorHeight - 8);
-
-    // Driving Aisles / Lanes
-    ctx.fillStyle = isLight ? '#e2e8f0' : '#1e293b';
-    ctx.fillRect(60, 310, floorWidth - 120, 140); // Center drive lane
-    ctx.fillRect(40, 60, 80, floorHeight - 120);   // Left drive lane
-    ctx.fillRect(floorWidth - 120, 60, 80, floorHeight - 120); // Right drive lane
-
-    // Lane dividing dashed lines
-    ctx.strokeStyle = isLight ? '#94a3b8' : 'rgba(250, 204, 21, 0.7)';
-    ctx.setLineDash([20, 15]);
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(120, 380);
-    ctx.lineTo(floorWidth - 120, 380);
-    ctx.stroke();
-    ctx.setLineDash([]); // Reset line dash
-
-    // Directional Arrows on Driveway
-    ctx.fillStyle = isLight ? 'rgba(15, 23, 42, 0.45)' : 'rgba(255, 255, 255, 0.4)';
-    ctx.font = 'bold 22px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('ENTRY ➔', 220, 380);
-    ctx.fillText('ONE WAY ➔ ➔', floorWidth / 2, 380);
-    ctx.fillText('➔ EXIT', floorWidth - 220, 380);
-
-    // Floor Label Watermark
-    ctx.fillStyle = isLight ? 'rgba(15, 23, 42, 0.05)' : 'rgba(255, 255, 255, 0.04)';
-    ctx.font = '900 80px sans-serif';
-    ctx.fillText(floorName.toUpperCase(), floorWidth / 2, 200);
 
     // Parking Bay Bay Marking Slots (Upper & Lower Row Bays)
     localSensors.forEach((sensor) => {
       const isUpper = sensor.y < 350;
-      const bayW = 66;
-      const bayH = 96;
+      const bayW = isB3 ? 36 : 66;
+      const bayH = isB3 ? 46 : 96;
       const bayX = sensor.x - bayW / 2;
-      const bayY = isUpper ? sensor.y - 48 : sensor.y - 48;
+      const bayY = isB3 ? sensor.y - bayH / 2 : (isUpper ? sensor.y - 48 : sensor.y - 48);
 
       const isSelected = selectedSensorId ? sensor.id === selectedSensorId : false;
-
-      // Draw Parking Bay Outline
-      if (isSelected) {
-        ctx.strokeStyle = '#06b6d4';
-        ctx.lineWidth = 3;
-        ctx.shadowColor = '#06b6d4';
-        ctx.shadowBlur = 12;
-      } else {
-        ctx.strokeStyle = isLight ? '#cbd5e1' : 'rgba(148, 163, 184, 0.3)';
-        ctx.lineWidth = 2;
-        ctx.shadowBlur = 0;
-      }
-      ctx.strokeRect(bayX, bayY, bayW, bayH);
-      ctx.shadowBlur = 0;
-
-      // Bay Floor background
-      ctx.fillStyle = isLight ? '#ffffff' : 'rgba(30, 41, 59, 0.6)';
-      ctx.fillRect(bayX, bayY, bayW, bayH);
-
-      // Check search highlight
       const isSearched =
-        searchQuery &&
+        !!searchQuery &&
         (sensor.sensorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          sensor.vehicleNo?.toLowerCase().includes(searchQuery.toLowerCase()));
+          (sensor.vehicleNo?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false));
+
+      if (!isB3) {
+        // Draw Parking Bay Outline
+        if (isSelected) {
+          ctx.strokeStyle = '#06b6d4';
+          ctx.lineWidth = 3;
+          ctx.shadowColor = '#06b6d4';
+          ctx.shadowBlur = 12;
+        } else {
+          ctx.strokeStyle = isLight ? '#cbd5e1' : 'rgba(148, 163, 184, 0.3)';
+          ctx.lineWidth = 2;
+          ctx.shadowBlur = 0;
+        }
+        ctx.strokeRect(bayX, bayY, bayW, bayH);
+        ctx.shadowBlur = 0;
+
+        // Bay Floor background
+        ctx.fillStyle = isLight ? '#ffffff' : 'rgba(30, 41, 59, 0.6)';
+        ctx.fillRect(bayX, bayY, bayW, bayH);
+      } else {
+        // Basement 3 / Free-flow sensors: NO square box!
+        // Show dotted lines from X axis and Y axis for selected or searched sensor
+        if (isSelected || isSearched) {
+          ctx.save();
+          ctx.strokeStyle = '#55aedd';
+          ctx.setLineDash([4, 4]);
+          ctx.lineWidth = 1.5;
+
+          // Vertical dotted line from X-axis (top) to sensor
+          ctx.beginPath();
+          ctx.moveTo(sensor.x, 0);
+          ctx.lineTo(sensor.x, sensor.y);
+          ctx.stroke();
+
+          // Horizontal dotted line from Y-axis (left) to sensor
+          ctx.beginPath();
+          ctx.moveTo(0, sensor.y);
+          ctx.lineTo(sensor.x, sensor.y);
+          ctx.stroke();
+
+          // Axis coordinate chip labels at top (X) and left (Y)
+          ctx.setLineDash([]);
+          ctx.font = 'bold 9.5px monospace';
+
+          // X-axis tag
+          const xText = `X: ${sensor.x}`;
+          const xTextW = ctx.measureText(xText).width;
+          ctx.fillStyle = '#2b4695';
+          ctx.fillRect(sensor.x - (xTextW + 10) / 2, 4, xTextW + 10, 16);
+          ctx.strokeStyle = '#55aedd';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(sensor.x - (xTextW + 10) / 2, 4, xTextW + 10, 16);
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(xText, sensor.x, 12);
+
+          // Y-axis tag
+          const yText = `Y: ${sensor.y}`;
+          const yTextW = ctx.measureText(yText).width;
+          ctx.fillStyle = '#2b4695';
+          ctx.fillRect(4, sensor.y - 8, yTextW + 10, 16);
+          ctx.strokeStyle = '#55aedd';
+          ctx.lineWidth = 1;
+          ctx.strokeRect(4, sensor.y - 8, yTextW + 10, 16);
+          ctx.fillStyle = '#ffffff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(yText, 4 + (yTextW + 10) / 2, sensor.y);
+
+          ctx.restore();
+        }
+      }
+
 
       // Draw Slot Circle
       ctx.beginPath();
@@ -190,8 +302,8 @@ export default function ParkingCanvas({
         slotColor = '#ef4444'; // Occupied = Red
         glowColor = 'rgba(239, 68, 68, 0.5)';
       } else if (sensor.status === 2) {
-        slotColor = '#3b82f6'; // Reserved = Blue
-        glowColor = 'rgba(59, 130, 246, 0.5)';
+        slotColor = '#2b4695'; // Reserved = Blue
+        glowColor = 'rgba(43, 70, 149, 0.5)';
       } else if (sensor.status === 3) {
         slotColor = '#64748b'; // Offline = Gray
         glowColor = 'rgba(100, 116, 139, 0.3)';
@@ -240,7 +352,7 @@ export default function ParkingCanvas({
 
     ctx.restore();
     ctx.restore();
-  }, [offset, scale, localSensors, floorName, searchQuery, theme, selectedSensorId]);
+  }, [offset, scale, localSensors, floorName, searchQuery, theme, selectedSensorId, isImgLoaded]);
 
   // Handle Canvas Resize
   useEffect(() => {
@@ -503,7 +615,7 @@ export default function ParkingCanvas({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full min-h-[460px] lg:min-h-[560px] glass-panel overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl select-none"
+      className="relative w-full h-full min-h-[400px] lg:min-h-[460px] xl:min-h-[520px] glass-panel overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl select-none"
     >
       {/* HTML5 Canvas */}
       <canvas

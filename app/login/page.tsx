@@ -8,10 +8,6 @@ import {
   User as UserIcon,
   ShieldCheck,
   ArrowRight,
-  Sun,
-  Moon,
-  Droplets,
-  Sparkles,
   Eye,
   EyeOff,
   AlertCircle,
@@ -24,11 +20,11 @@ import {
   KeyRound,
   ShieldAlert,
 } from 'lucide-react';
-import { AppTheme, UserRole } from '@/types';
+import { UserRole } from '@/types';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, logout, currentUser, theme, setTheme, users } = usePGS();
+  const { login, logout, currentUser, users } = usePGS();
 
   const [username, setUsername] = useState('Admin');
   const [password, setPassword] = useState('god123');
@@ -127,13 +123,6 @@ export default function LoginPage() {
     }, 400);
   };
 
-  const themes: { id: AppTheme; label: string; icon: React.ReactNode }[] = [
-    { id: 'light', label: 'Light', icon: <Sun className="w-3.5 h-3.5" /> },
-    { id: 'dark', label: 'Dark', icon: <Moon className="w-3.5 h-3.5" /> },
-    { id: 'blue', label: 'Sapphire', icon: <Droplets className="w-3.5 h-3.5" /> },
-    { id: 'glass', label: 'Glass', icon: <Sparkles className="w-3.5 h-3.5" /> },
-  ];
-
   return (
     <div className="min-h-screen flex flex-col justify-between items-center p-3 sm:p-6 relative overflow-hidden transition-colors duration-300">
       {/* Background Decorative Ambient Radial Lighting */}
@@ -141,7 +130,7 @@ export default function LoginPage() {
       <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-10 left-10 w-[350px] h-[350px] bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Top Header Bar: Telemetry Status & Theme Switcher */}
+      {/* Top Header Bar: Telemetry Status */}
       <div className="w-full max-w-5xl flex items-center justify-between z-20 gap-3">
         {/* Gateway Telemetry Status */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full glass-panel text-[11px] text-slate-600 dark:text-slate-300 shadow-sm">
@@ -149,25 +138,6 @@ export default function LoginPage() {
           <span className="font-mono font-medium text-emerald-600 dark:text-emerald-400">EDGE GATEWAY ONLINE</span>
           <span className="opacity-40">|</span>
           <span className="font-mono text-slate-500">12ms • SSL Encrypted</span>
-        </div>
-
-        {/* Floating Theme Selector */}
-        <div className="flex items-center gap-1 glass-panel p-1 rounded-lg shadow-sm">
-          {themes.map((t) => (
-            <button
-              key={t.id}
-              onClick={() => setTheme(t.id)}
-              title={`Switch to ${t.label} Theme`}
-              className={`px-2.5 py-1 text-xs font-normal flex items-center gap-1.5 rounded transition-all ${
-                theme === t.id
-                  ? 'bg-blue-600 text-white shadow'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
-              }`}
-            >
-              {t.icon}
-              <span className="hidden sm:inline text-[11px]">{t.label}</span>
-            </button>
-          ))}
         </div>
       </div>
 

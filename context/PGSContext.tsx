@@ -123,32 +123,24 @@ interface PGSContextType {
 const PGSContext = createContext<PGSContextType | undefined>(undefined);
 
 export function PGSProvider({ children }: { children: React.ReactNode }) {
-  // Theme state: 'light' | 'dark' | 'blue' | 'glass' - starts with server-safe 'dark'
-  const [theme, setThemeState] = useState<AppTheme>('dark');
+  // Theme state: white/light theme only
+  const [theme, setThemeState] = useState<AppTheme>('light');
   const isInitializedRef = useRef(false);
 
-  const setTheme = (newTheme: AppTheme) => {
-    setThemeState(newTheme);
+  const setTheme = (_newTheme: AppTheme) => {
+    setThemeState('light');
     if (typeof window !== 'undefined') {
-      localStorage.setItem('pgs_theme', newTheme);
-      document.documentElement.setAttribute('data-theme', newTheme);
-      // Synchronize dark class for Tailwind
-      if (newTheme === 'light') {
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-      }
+      localStorage.setItem('pgs_theme', 'light');
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.remove('dark');
     }
   };
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      document.documentElement.setAttribute('data-theme', theme);
-      if (theme === 'light') {
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-      }
+      localStorage.setItem('pgs_theme', 'light');
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.remove('dark');
     }
   }, [theme]);
 
@@ -175,10 +167,9 @@ export function PGSProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
-      const savedTheme = localStorage.getItem('pgs_theme') as AppTheme;
-      if (savedTheme && ['light', 'dark', 'blue', 'glass'].includes(savedTheme)) {
-        setThemeState(savedTheme);
-      }
+      localStorage.setItem('pgs_theme', 'light');
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.classList.remove('dark');
       const savedUser = localStorage.getItem('pgs_user');
       if (savedUser) {
         try { setCurrentUser(JSON.parse(savedUser)); } catch {}

@@ -261,7 +261,7 @@ export default function ScreensPage() {
                 <button
                   onClick={() => setIsAddScreenModalOpen(true)}
                   title="Add New Screen"
-                  className="w-6 h-6 bg-[#3b82f6] hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
+                  className="w-6 h-6 bg-[#2b4695] hover:bg-[#243b7d] text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[3]" />
                 </button>
@@ -279,7 +279,7 @@ export default function ScreensPage() {
             <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-[#4a72b8] text-white font-semibold">
+                  <tr className="bg-[#2b4695] text-white font-semibold">
                     <th className="py-2.5 px-4">SCREEN NAME</th>
                   </tr>
                 </thead>
@@ -295,7 +295,7 @@ export default function ScreensPage() {
                         }}
                         className={`cursor-pointer transition-colors ${
                           isSelected
-                            ? 'bg-[#cde4fd] text-slate-900 font-bold'
+                            ? 'bg-blue-100 text-slate-900 font-bold'
                             : 'hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-700 dark:text-slate-300'
                         }`}
                       >
@@ -326,7 +326,7 @@ export default function ScreensPage() {
                 <button
                   onClick={handleOpenSensorModal}
                   title="Add Sensor (Opens SCREEN DETAILS Popup)"
-                  className="w-6 h-6 bg-[#3b82f6] hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
+                  className="w-6 h-6 bg-[#2b4695] hover:bg-[#243b7d] text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
                 >
                   <Plus className="w-3.5 h-3.5 stroke-[3]" />
                 </button>
@@ -344,7 +344,7 @@ export default function ScreensPage() {
             <div className="border border-slate-200 dark:border-slate-700 rounded overflow-x-auto shadow-sm">
               <table className="w-full text-left border-collapse min-w-[550px] text-xs">
                 <thead>
-                  <tr className="bg-[#4a72b8] text-white font-semibold">
+                  <tr className="bg-[#2b4695] text-white font-semibold">
                     <th className="py-2.5 px-3 border-r border-white/40">SCREEN NAME</th>
                     <th className="py-2.5 px-3 border-r border-white/40">CTRL ID</th>
                     <th className="py-2.5 px-3 border-r border-white/40">SENSOR NAME</th>

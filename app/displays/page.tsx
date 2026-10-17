@@ -473,7 +473,7 @@ export default function DisplaysPage() {
                       });
                       setIsAddDisplayModalOpen(true);
                     }}
-                    className="w-6 h-6 bg-[#3b82f6] hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
+                    className="w-6 h-6 bg-[#2b4695] hover:bg-[#243b7d] text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[3]" />
                   </button>
@@ -494,7 +494,7 @@ export default function DisplaysPage() {
               <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#4a72b8] text-white font-semibold">
+                    <tr className="bg-[#2b4695] text-white font-semibold">
                       <th className="py-2.5 px-3 border-r border-white/40">Display Name</th>
                       <th className="py-2.5 px-3 border-r border-white/40">IP Port</th>
                       <th className="py-2.5 px-3">Display Id</th>
@@ -567,7 +567,7 @@ export default function DisplaysPage() {
                       setSelectedSensorsToAssign([]);
                       setIsAssignSensorModalOpen(true);
                     }}
-                    className="w-6 h-6 bg-[#3b82f6] hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
+                    className="w-6 h-6 bg-[#2b4695] hover:bg-[#243b7d] text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[3]" />
                   </button>
@@ -588,7 +588,7 @@ export default function DisplaysPage() {
               <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#4a72b8] text-white font-semibold">
+                    <tr className="bg-[#2b4695] text-white font-semibold">
                       <th className="py-2.5 px-4 border-r border-white/40">NAME</th>
                       <th className="py-2.5 px-4 border-r border-white/40">SENSOR NAME</th>
                       <th className="py-2.5 px-4 border-r border-white/40">SENSOR ID</th>
@@ -863,7 +863,7 @@ export default function DisplaysPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-1.5 bg-[#418be8] hover:bg-[#3476cb] text-white rounded font-medium shadow-sm"
+                  className="px-5 py-1.5 bg-[#2b4695] hover:bg-[#23397d] text-white rounded font-medium shadow-sm"
                 >
                   Create Display
                 </button>
@@ -994,7 +994,7 @@ export default function DisplaysPage() {
                   type="button"
                   disabled={selectedSensorsToAssign.length === 0}
                   onClick={handleAssignSensorsSubmit}
-                  className="px-5 py-1.5 bg-[#418be8] hover:bg-[#3476cb] disabled:opacity-50 text-white rounded font-medium shadow-sm"
+                  className="px-5 py-1.5 bg-[#2b4695] hover:bg-[#23397d] disabled:opacity-50 text-white rounded font-medium shadow-sm"
                 >
                   Assign to Display
                 </button>

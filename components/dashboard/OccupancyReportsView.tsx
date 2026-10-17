@@ -197,7 +197,7 @@ export default function OccupancyReportsView() {
             <div className="overflow-x-auto border border-slate-200 dark:border-white/10">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="bg-slate-100 dark:bg-white/5 uppercase text-[10px] tracking-wider text-slate-500 font-bold border-b border-inherit">
+                  <tr className="bg-[#2b4695] text-white uppercase text-[10px] tracking-wider font-bold border-b border-white/20">
                     <th className="py-2 px-3">Hour</th>
                     <th className="py-2 px-3">Occupied Bays</th>
                     <th className="py-2 px-3">Occupancy Rate</th>
@@ -273,7 +273,7 @@ export default function OccupancyReportsView() {
             <div className="overflow-x-auto border border-slate-200 dark:border-white/10">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="bg-slate-100 dark:bg-white/5 uppercase text-[10px] tracking-wider text-slate-500 font-bold border-b border-inherit">
+                  <tr className="bg-[#2b4695] text-white uppercase text-[10px] tracking-wider font-bold border-b border-white/20">
                     <th className="py-2 px-3">Date</th>
                     <th className="py-2 px-3">Day</th>
                     <th className="py-2 px-3">Avg Occupied</th>
@@ -316,7 +316,7 @@ export default function OccupancyReportsView() {
             <div className="overflow-x-auto border border-slate-200 dark:border-white/10">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="bg-slate-100 dark:bg-white/5 uppercase text-[10px] tracking-wider text-slate-500 font-bold border-b border-inherit">
+                  <tr className="bg-[#2b4695] text-white uppercase text-[10px] tracking-wider font-bold border-b border-white/20">
                     <th className="py-2.5 px-3">Day of Week</th>
                     <th className="py-2.5 px-3">Avg Occupancy %</th>
                     <th className="py-2.5 px-3">Peak Congestion Hour</th>

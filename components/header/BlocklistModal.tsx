@@ -295,7 +295,7 @@ export default function BlocklistModal({ isOpen, onClose }: BlocklistModalProps)
         <div className="flex-1 min-h-0 overflow-y-auto p-4 scrollbar-thin overflow-x-auto">
           <table className="w-full min-w-[650px] text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 text-[10.5px] uppercase font-bold">
+              <tr className="border-b border-white/20 bg-[#2b4695] text-white text-[10.5px] uppercase font-bold">
                 <th className="py-2 px-2.5">License Plate</th>
                 <th className="py-2 px-2.5">Vehicle Info</th>
                 <th className="py-2 px-3">Violation Reason</th>
@@ -330,7 +330,7 @@ export default function BlocklistModal({ isOpen, onClose }: BlocklistModalProps)
                       </span>
                     )}
                     {item.actionOnTrigger === 'LOCK_GATE' && (
-                      <span className="px-2 py-0.5 rounded bg-purple-500/20 text-purple-600 dark:text-purple-400 border border-purple-500/30">
+                      <span className="px-2 py-0.5 rounded bg-[#55aedd]/20 text-[#55aedd] dark:text-[#55aedd] border border-[#55aedd]/30">
                         Lock Ingate
                       </span>
                     )}

@@ -101,7 +101,7 @@ export default function LiveDeviceTable() {
       <div className="overflow-x-auto flex-1 scrollbar-thin">
         <table className="w-full text-left text-xs border-collapse">
           <thead>
-            <tr className="border-b border-slate-200 dark:border-white/10 bg-slate-100/70 dark:bg-white/5 uppercase text-[10.5px] tracking-wider text-slate-500 dark:text-slate-400 font-bold sticky top-0 backdrop-blur-md z-10">
+            <tr className="border-b border-white/20 bg-[#2b4695] uppercase text-[10.5px] tracking-wider text-white font-bold sticky top-0 backdrop-blur-md z-10">
               <th className="py-2.5 px-3">3.1 Connection (Camera Name)</th>
               <th className="py-2.5 px-3">3.2 IP Address of Camera</th>
               <th className="py-2.5 px-3 text-center">3.3 Live View</th>

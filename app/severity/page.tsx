@@ -142,7 +142,7 @@ export default function SeverityPage() {
         <div className="border border-slate-300 dark:border-slate-700 rounded overflow-hidden shadow-sm flex flex-col justify-between min-h-[360px] bg-white dark:bg-slate-900">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-[#4a72b8] text-white">
+              <thead className="bg-[#2b4695] text-white">
                 <tr>
                   <th className="py-2.5 px-3 font-semibold text-center w-14 border-r border-white/40">SNO</th>
                   <th className="py-2.5 px-4 font-semibold border-r border-white/40 w-48">Severity Code</th>
@@ -196,7 +196,7 @@ export default function SeverityPage() {
                         type="checkbox"
                         checked={item.email}
                         onChange={() => handleToggleChannel(item.id, 'email')}
-                        className="w-4 h-4 rounded border-slate-300 accent-[#007bff] cursor-pointer"
+                        className="w-4 h-4 rounded border-slate-300 accent-[#2b4695] cursor-pointer"
                       />
                     </td>
 
@@ -206,7 +206,7 @@ export default function SeverityPage() {
                         type="checkbox"
                         checked={item.sms}
                         onChange={() => handleToggleChannel(item.id, 'sms')}
-                        className="w-4 h-4 rounded border-slate-300 accent-[#007bff] cursor-pointer"
+                        className="w-4 h-4 rounded border-slate-300 accent-[#2b4695] cursor-pointer"
                       />
                     </td>
 
@@ -216,7 +216,7 @@ export default function SeverityPage() {
                         type="checkbox"
                         checked={item.whatsApp}
                         onChange={() => handleToggleChannel(item.id, 'whatsApp')}
-                        className="w-4 h-4 rounded border-slate-300 accent-[#007bff] cursor-pointer"
+                        className="w-4 h-4 rounded border-slate-300 accent-[#2b4695] cursor-pointer"
                       />
                     </td>
 
@@ -226,7 +226,7 @@ export default function SeverityPage() {
                         type="checkbox"
                         checked={item.status}
                         onChange={() => handleToggleChannel(item.id, 'status')}
-                        className="w-4 h-4 rounded border-slate-300 accent-[#007bff] cursor-pointer"
+                        className="w-4 h-4 rounded border-slate-300 accent-[#2b4695] cursor-pointer"
                       />
                     </td>
                   </tr>

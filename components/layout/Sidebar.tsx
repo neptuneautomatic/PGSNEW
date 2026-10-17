@@ -181,7 +181,7 @@ export default function Sidebar({
             <div key={section.title || `sec-${idx}`} className="space-y-1">
               {/* Section Header */}
               {section.title && !isCollapsed ? (
-                <div className="px-3 pt-1.5 pb-0.5 text-[11px] font-medium uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                <div className="px-3 pt-2 pb-1 text-xs font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                   {section.title}
                 </div>
               ) : (
@@ -207,11 +207,11 @@ export default function Sidebar({
                         isCollapsed
                           ? 'justify-center w-full h-10 rounded-md'
                           : 'justify-between px-3 py-2 rounded-md'
-                      } text-[13px] sm:text-sm font-normal ${
+                      } text-sm font-medium ${
                         isParentActive
                           ? isCollapsed
                             ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30'
-                            : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-medium border-l-[3px] border-blue-600'
+                            : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-semibold border-l-[3px] border-blue-600'
                           : item.highlight
                           ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/20'
                           : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
@@ -228,19 +228,19 @@ export default function Sidebar({
                           }`}
                         />
                         {!isCollapsed && (
-                          <span className="text-[13px] truncate tracking-normal">{item.label}</span>
+                          <span className="text-sm truncate tracking-normal">{item.label}</span>
                         )}
                       </div>
 
                       {!isCollapsed && (
                         <div className="flex items-center gap-1.5">
                           {item.subItems && (
-                            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-medium">
+                            <span className="text-xs font-mono px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 font-semibold">
                               2
                             </span>
                           )}
                           {isParentActive && (
-                            <ChevronRight className="w-3.5 h-3.5 text-blue-500 dark:text-blue-400 shrink-0 opacity-80" />
+                            <ChevronRight className="w-4 h-4 text-blue-500 dark:text-blue-400 shrink-0 opacity-80" />
                           )}
                         </div>
                       )}
@@ -259,22 +259,22 @@ export default function Sidebar({
                               key={sub.href}
                               href={sub.href}
                               onClick={handleCloseMobile}
-                              className={`flex items-center justify-between px-2.5 py-1.5 rounded text-xs font-normal transition ${
+                              className={`flex items-center justify-between px-2.5 py-1.5 rounded text-sm font-medium transition ${
                                 isSubActive
-                                  ? 'bg-blue-600 text-white font-medium shadow-sm shadow-blue-600/30'
+                                  ? 'bg-blue-600 text-white font-semibold shadow-sm shadow-blue-600/30'
                                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5'
                               }`}
                             >
                               <div className="flex items-center gap-2">
                                 <span
-                                  className={`w-1.5 h-1.5 rounded-full ${
+                                  className={`w-2 h-2 rounded-full ${
                                     isSubActive ? 'bg-white' : 'bg-slate-400 dark:bg-slate-600'
                                   }`}
                                 />
-                                <span className="text-xs">{sub.label}</span>
+                                <span className="text-sm">{sub.label}</span>
                               </div>
                               {isSubActive && (
-                                <span className="text-[9px] uppercase font-medium tracking-wider opacity-90">LIVE</span>
+                                <span className="text-[11px] uppercase font-bold tracking-wider opacity-90">LIVE</span>
                               )}
                             </Link>
                           );
@@ -328,7 +328,7 @@ export default function Sidebar({
           <button
             onClick={onToggleCollapse}
             title={isCollapsed ? 'Expand Sidebar (Ctrl+B)' : 'Minimize Sidebar (Ctrl+B)'}
-            className={`w-full py-1.5 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-white/10 transition text-xs font-normal ${
+            className={`w-full py-1.5 flex items-center justify-center rounded-md text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-white/10 transition text-sm font-medium ${
               isCollapsed ? '' : 'gap-1.5 px-2'
             }`}
           >
@@ -336,9 +336,9 @@ export default function Sidebar({
               <ChevronRight className="w-4 h-4" />
             ) : (
               <>
-                <ChevronLeft className="w-3.5 h-3.5" />
-                <span className="text-xs">Minimize Sidebar</span>
-                <span className="text-[10px] opacity-60 ml-auto font-mono">Ctrl+B</span>
+                <ChevronLeft className="w-4 h-4" />
+                <span className="text-sm">Minimize Sidebar</span>
+                <span className="text-xs opacity-60 ml-auto font-mono">Ctrl+B</span>
               </>
             )}
           </button>
@@ -346,7 +346,7 @@ export default function Sidebar({
           {!isCollapsed && (
             <div className="flex flex-col items-center justify-center pt-2 mt-1.5 border-t border-slate-200/40 dark:border-slate-800/40">
               <img src="/images/neptune-logo.webp" alt="Neptune India" className="h-4 w-auto object-contain opacity-85" />
-              <p className="text-[10px] text-slate-400 dark:text-slate-500 font-mono mt-0.5 tracking-wider">
+              <p className="text-xs text-slate-400 dark:text-slate-500 font-mono mt-0.5 tracking-wider">
                 Smart Guidance System
               </p>
             </div>

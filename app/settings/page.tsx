@@ -25,7 +25,7 @@ export default function SettingsPage() {
   const [colorSettings, setColorSettings] = useState({
     currentVehicleType: 'General',
     general: '#00e676',
-    handicap: '#0000ff',
+    handicap: '#2b4695',
     womens: '#f8bbd0',
     ev: '#c6ff00',
     vip: '#d50000',
@@ -501,7 +501,7 @@ export default function SettingsPage() {
             <button
               type="button"
               onClick={handleSaveDisplay}
-              className="bg-[#4379ee] hover:bg-blue-600 text-white font-semibold text-xs px-6 py-1.5 rounded shadow-sm transition active:scale-95"
+              className="bg-[#2b4695] hover:bg-[#243b7d] text-white font-semibold text-xs px-6 py-1.5 rounded shadow-sm transition active:scale-95"
             >
               Save
             </button>
@@ -521,7 +521,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => handleDownload('Binary')}
-                className="bg-[#4379ee] hover:bg-blue-600 text-white font-medium text-xs px-4 py-1.5 rounded flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                className="bg-[#2b4695] hover:bg-[#243b7d] text-white font-medium text-xs px-4 py-1.5 rounded flex items-center gap-1.5 shadow-sm transition active:scale-95"
               >
                 <Download className="w-3.5 h-3.5" />
                 Binary
@@ -535,7 +535,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => handleDownload('TLS Key')}
-                className="bg-[#4379ee] hover:bg-blue-600 text-white font-medium text-xs px-4 py-1.5 rounded flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                className="bg-[#2b4695] hover:bg-[#243b7d] text-white font-medium text-xs px-4 py-1.5 rounded flex items-center gap-1.5 shadow-sm transition active:scale-95"
               >
                 <Download className="w-3.5 h-3.5" />
                 TLS Key
@@ -549,7 +549,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 onClick={() => handleDownload('Manual')}
-                className="bg-[#4379ee] hover:bg-blue-600 text-white font-medium text-xs px-4 py-1.5 rounded flex items-center gap-1.5 shadow-sm transition active:scale-95"
+                className="bg-[#2b4695] hover:bg-[#243b7d] text-white font-medium text-xs px-4 py-1.5 rounded flex items-center gap-1.5 shadow-sm transition active:scale-95"
               >
                 <Download className="w-3.5 h-3.5" />
                 Manual

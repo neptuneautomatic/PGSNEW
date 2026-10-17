@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { usePGS } from '@/context/PGSContext';
 import { Sensor } from '@/types';
-import { GitCommit, Car, CheckCircle2, ClockAlert, ArrowRight, Layers, Sparkles } from 'lucide-react';
+import { GitCommit, Car, CheckCircle2, ClockAlert, ArrowRight, Layers, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface LaneBreakdownProps {
   selectedLaneIndex: number | null;
@@ -12,6 +12,7 @@ interface LaneBreakdownProps {
 
 export default function LaneBreakdown({ selectedLaneIndex, onSelectLane }: LaneBreakdownProps) {
   const { activeScreenSensors, activeScreen, settings } = usePGS();
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const overstayMs = (settings.overstayHoursThreshold || 4) * 3600 * 1000;
   const nowMs = Date.now();
@@ -53,37 +54,80 @@ export default function LaneBreakdown({ selectedLaneIndex, onSelectLane }: LaneB
   });
 
   return (
-    <div className="glass-panel p-2.5 border border-slate-200 dark:border-white/10 shrink-0">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 pb-1.5 border-b border-slate-200 dark:border-white/10">
+    <div className="glass-panel px-3 py-1.5 border border-slate-200 dark:border-white/10 shrink-0 transition-all">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="p-1 bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">
             <GitCommit className="w-3.5 h-3.5" />
           </span>
-          <div>
+          <div className="flex items-center gap-2">
             <h3 className="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-              <span>Parking Lanes Breakdown</span>
+              <span>Lanes Breakdown</span>
               <span className="text-[10px] font-semibold px-1.5 py-0.2 bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
-                Total: {laneCount} Lanes
+                {laneCount} Lanes
               </span>
             </h3>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400">
-              Live per-lane capacity, occupancy, vacancy, and long-stay overstay monitoring
-            </p>
           </div>
         </div>
 
-        {selectedLaneIndex !== null && (
+        {/* Compact Lane Chips (Always visible for quick lane switching) */}
+        <div className="flex items-center gap-1 overflow-x-auto">
           <button
+            type="button"
             onClick={() => onSelectLane(null)}
-            className="text-[10.5px] font-semibold text-indigo-600 dark:text-indigo-400 hover:underline self-start sm:self-auto"
+            className={`px-2 py-0.5 text-[11px] font-medium transition rounded ${
+              selectedLaneIndex === null
+                ? 'bg-indigo-600 text-white font-bold shadow-sm'
+                : 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
           >
-            Clear Lane Filter
+            All Lanes
           </button>
-        )}
+          {lanes.map((lane) => {
+            const isSelected = selectedLaneIndex === lane.index;
+            return (
+              <button
+                type="button"
+                key={lane.index}
+                onClick={() => onSelectLane(isSelected ? null : lane.index)}
+                className={`px-2 py-0.5 text-[11px] font-medium transition rounded flex items-center gap-1.5 whitespace-nowrap ${
+                  isSelected
+                    ? 'bg-indigo-600 text-white font-bold shadow-sm'
+                    : 'bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <span>L{lane.index + 1}</span>
+                <span
+                  className={`text-[9.5px] px-1 rounded font-mono ${
+                    lane.occupancyPercent >= 80
+                      ? 'bg-rose-500/20 text-rose-500 font-bold'
+                      : lane.occupancyPercent >= 50
+                      ? 'bg-amber-500/20 text-amber-500 font-bold'
+                      : 'bg-emerald-500/20 text-emerald-500 font-bold'
+                  }`}
+                >
+                  {lane.occupancyPercent}%
+                </span>
+              </button>
+            );
+          })}
+
+          {/* Toggle Full Cards Button */}
+          <button
+            type="button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            title={isExpanded ? 'Hide detailed lane cards' : 'Show detailed lane cards'}
+            className="ml-1 p-1 text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 rounded transition flex items-center gap-0.5 text-[11px]"
+          >
+            <span className="hidden sm:inline text-[10.5px]">{isExpanded ? 'Collapse' : 'Details'}</span>
+            {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+          </button>
+        </div>
       </div>
 
-      {/* 4 Lanes Horizontal Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+      {/* 4 Lanes Horizontal Grid (Expandable on demand to save laptop height) */}
+      {isExpanded && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mt-2 pt-2 border-t border-slate-200 dark:border-white/10 animate-in fade-in duration-200">
         {lanes.map((lane) => {
           const isSelected = selectedLaneIndex === lane.index;
 
@@ -164,6 +208,7 @@ export default function LaneBreakdown({ selectedLaneIndex, onSelectLane }: LaneB
           );
         })}
       </div>
+      )}
     </div>
   );
 }

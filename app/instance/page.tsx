@@ -125,7 +125,7 @@ export default function InstancePage() {
         <div className="border border-slate-300 dark:border-slate-700 rounded overflow-hidden shadow-sm bg-white dark:bg-slate-900 min-h-[300px] flex flex-col justify-between">
           <div className="overflow-x-auto">
             <table className="w-full text-xs text-left border-collapse">
-              <thead className="bg-[#4a72b8] text-white">
+              <thead className="bg-[#2b4695] text-white">
                 <tr>
                   <th className="py-2.5 px-3 font-semibold text-center w-14 border-r border-white/40">SNO</th>
                   <th className="py-2.5 px-4 font-semibold border-r border-white/40">INSTANCE NAME</th>

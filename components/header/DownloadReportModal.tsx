@@ -70,9 +70,9 @@ export default function DownloadReportModal({ isOpen, onClose }: DownloadReportM
         csvContent += `Date Range: ${startDate} to ${endDate}\r\n`;
         csvContent += `Generated At: ${new Date().toLocaleString()}\r\n\r\n`;
         csvContent += `Facility,Floor/Basement,Total Capacity,Occupied,Available,Occupancy Rate,Long Stay Count\r\n`;
-        csvContent += `Neptune HQ,Basement 1 (B1),45,28,17,62.2%,3\r\n`;
-        csvContent += `Neptune HQ,Basement 2 (B2),40,22,18,55.0%,2\r\n`;
-        csvContent += `Neptune HQ,Basement 3 (B3),35,14,21,40.0%,1\r\n`;
+        csvContent += `Neptune HQ,Basement 1,45,28,17,62.2%,3\r\n`;
+        csvContent += `Neptune HQ,Basement 2,40,22,18,55.0%,2\r\n`;
+        csvContent += `Neptune HQ,Basement 3,38,18,20,47.4%,2\r\n`;
         csvContent += `Neptune HQ,Ground Floor (GF),36,18,18,50.0%,2\r\n`;
         csvContent += `Neptune Commercial,Tower B Level 1,50,32,18,64.0%,3\r\n`;
         csvContent += `Total,Combined All Floors,206,114,92,55.3%,11\r\n\r\n`;

@@ -126,7 +126,7 @@ export default function PageRightsPage() {
               <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm max-h-[400px] overflow-y-auto">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead className="sticky top-0 z-10">
-                    <tr className="bg-[#4a72b8] text-white font-semibold">
+                    <tr className="bg-[#2b4695] text-white font-semibold">
                       <th className="py-2.5 px-3">USERNAME</th>
                     </tr>
                   </thead>
@@ -176,7 +176,7 @@ export default function PageRightsPage() {
               <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm relative min-h-[360px]">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#4a72b8] text-white font-semibold">
+                    <tr className="bg-[#2b4695] text-white font-semibold">
                       <th className="py-2.5 px-3 border-r border-white/40 text-center w-14">Select</th>
                       <th className="py-2.5 px-4 border-r border-white/40">USER NAME</th>
                       <th className="py-2.5 px-4 border-r border-white/40">SCREEN NAME</th>

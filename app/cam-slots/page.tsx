@@ -429,7 +429,7 @@ export default function CamSlotsPage() {
             <div className="flex items-end pb-1">
               <button
                 type="submit"
-                className="bg-[#4379ee] hover:bg-blue-600 text-white font-medium text-xs px-7 py-2 rounded shadow-sm transition active:scale-95"
+                className="bg-[#2b4695] hover:bg-[#243b7d] text-white font-medium text-xs px-7 py-2 rounded shadow-sm transition active:scale-95"
               >
                 Save
               </button>
@@ -450,7 +450,7 @@ export default function CamSlotsPage() {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(true)}
-                  className="w-5 h-5 rounded-full bg-[#3b82f6] hover:bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm transition active:scale-90"
+                  className="w-5 h-5 rounded-full bg-[#2b4695] hover:bg-[#243b7d] text-white flex items-center justify-center font-bold text-xs shadow-sm transition active:scale-90"
                   title="Add Connection"
                 >
                   +
@@ -471,7 +471,7 @@ export default function CamSlotsPage() {
             <div className="border border-slate-300 dark:border-slate-700 rounded overflow-hidden shadow-sm">
               <div className="overflow-x-auto">
                 <table className="w-full text-xs text-left border-collapse">
-                  <thead className="bg-[#4a72b8] text-white">
+                  <thead className="bg-[#2b4695] text-white">
                     <tr>
                       <th className="py-2 px-2.5 font-semibold text-center w-14 border-r border-white/40">ROWID</th>
                       <th className="py-2 px-3 font-semibold border-r border-white/40">NAME</th>
@@ -516,7 +516,7 @@ export default function CamSlotsPage() {
                 <button
                   type="button"
                   onClick={() => setIsAddSlotModalOpen(true)}
-                  className="w-5 h-5 rounded-full bg-[#3b82f6] hover:bg-blue-600 text-white flex items-center justify-center font-bold text-xs shadow-sm transition active:scale-90"
+                  className="w-5 h-5 rounded-full bg-[#2b4695] hover:bg-[#243b7d] text-white flex items-center justify-center font-bold text-xs shadow-sm transition active:scale-90"
                   title="Add Slot"
                 >
                   +
@@ -535,7 +535,7 @@ export default function CamSlotsPage() {
 
             {/* Slot Table Container */}
             <div className="border border-slate-300 dark:border-slate-700 rounded overflow-hidden shadow-sm flex flex-col min-h-[250px]">
-              <div className="bg-[#4a72b8] text-white py-2 px-3 font-semibold text-xs h-8 flex items-center">
+              <div className="bg-[#2b4695] text-white py-2 px-3 font-semibold text-xs h-8 flex items-center">
                 <div className="grid grid-cols-4 w-full">
                   <span className="border-r border-white/40 px-1">SLOT ID</span>
                   <span className="border-r border-white/40 px-1">BAY NO</span>

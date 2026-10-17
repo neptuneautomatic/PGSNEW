@@ -122,7 +122,7 @@ export default function UsersPage() {
         <div className="border border-slate-300 dark:border-slate-700 rounded overflow-hidden shadow-sm bg-white dark:bg-slate-900">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
-              <thead className="bg-[#4a72b8] text-white">
+              <thead className="bg-[#2b4695] text-white">
                 <tr>
                   <th className="py-2.5 px-4 font-semibold border-r border-white/40">USER</th>
                   <th className="py-2.5 px-4 font-semibold border-r border-white/40">ROLE / TYPE</th>
@@ -146,7 +146,7 @@ export default function UsersPage() {
                   <td className="py-3 px-4">
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold ${
                       user.userType === 'Admin'
-                        ? 'bg-purple-500/15 text-purple-600 dark:text-purple-300 border border-purple-500/30'
+                        ? 'bg-[#55aedd]/15 text-[#55aedd] dark:text-[#55aedd] border border-[#55aedd]/30'
                         : user.userType === 'Operator'
                         ? 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-300 border border-indigo-500/30'
                         : 'glass-panel'

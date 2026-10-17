@@ -247,7 +247,7 @@ export default function MainDisplayPage() {
                       });
                       setIsAddMainModalOpen(true);
                     }}
-                    className="w-6 h-6 bg-[#3b82f6] hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
+                    className="w-6 h-6 bg-[#2b4695] hover:bg-[#243b7d] text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[3]" />
                   </button>
@@ -267,7 +267,7 @@ export default function MainDisplayPage() {
               <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm min-h-[320px]">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#4a72b8] text-white font-semibold">
+                    <tr className="bg-[#2b4695] text-white font-semibold">
                       <th className="py-2.5 px-3 border-r border-white/40">Display Name</th>
                       <th className="py-2.5 px-3">IP Port</th>
                     </tr>
@@ -315,7 +315,7 @@ export default function MainDisplayPage() {
                     type="button"
                     title="Bind Display to Main Totem"
                     onClick={() => setIsBindDisplayModalOpen(true)}
-                    className="w-6 h-6 bg-[#3b82f6] hover:bg-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
+                    className="w-6 h-6 bg-[#2b4695] hover:bg-[#243b7d] text-white rounded-full flex items-center justify-center font-bold shadow-sm transition-transform active:scale-90"
                   >
                     <Plus className="w-3.5 h-3.5 stroke-[3]" />
                   </button>
@@ -335,7 +335,7 @@ export default function MainDisplayPage() {
               <div className="border border-slate-200 dark:border-slate-700 rounded overflow-hidden shadow-sm min-h-[320px]">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="bg-[#4a72b8] text-white font-semibold">
+                    <tr className="bg-[#2b4695] text-white font-semibold">
                       <th className="py-2.5 px-4 border-r border-white/40">DISPLAY NAME</th>
                       <th className="py-2.5 px-4 border-r border-white/40">CAPACITY</th>
                       <th className="py-2.5 px-4 border-r border-white/40">OCCUPIED</th>
@@ -448,7 +448,7 @@ export default function MainDisplayPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-1.5 bg-[#418be8] hover:bg-[#3476cb] text-white rounded font-medium shadow-sm"
+                  className="px-5 py-1.5 bg-[#2b4695] hover:bg-[#23397d] text-white rounded font-medium shadow-sm"
                 >
                   Save
                 </button>

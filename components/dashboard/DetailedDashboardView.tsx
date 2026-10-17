@@ -2,12 +2,10 @@
 
 import React, { useState } from 'react';
 import { usePGS } from '@/context/PGSContext';
+import { useBackground } from '@/context/BackgroundContext';
 import ParkingCanvas from '@/components/canvas/ParkingCanvas';
-import OfficeOverview from '@/components/dashboard/OfficeOverview';
-import LaneBreakdown from '@/components/dashboard/LaneBreakdown';
 import LiveDeviceTable from '@/components/dashboard/LiveDeviceTable';
 import OccupancyReportsView from '@/components/dashboard/OccupancyReportsView';
-import ViewSwitcherBar from '@/components/dashboard/ViewSwitcherBar';
 import { Sensor } from '@/types';
 import {
   Car,
@@ -32,6 +30,7 @@ import {
   Map,
   Table,
   BarChart3,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { formatDuration, getStatusBadge } from '@/lib/utils';
 
@@ -52,6 +51,7 @@ export default function DetailedDashboardView() {
     setIsSimulationRunning,
     logs,
   } = usePGS();
+  const { setIsModalOpen } = useBackground();
 
   // Active dashboard workstation tab
   const [activeDashboardView, setActiveDashboardView] = useState<'MAP' | 'DEVICES' | 'REPORTS'>('MAP');
@@ -108,21 +108,9 @@ export default function DetailedDashboardView() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col gap-2.5 pb-4">
-      {/* 1. Top Mode Switcher (Simplified View vs Detailed View) & Rotator Controls */}
-      <ViewSwitcherBar />
-
-      {/* 2. Office Name & Facility-Wide Overview */}
-      <OfficeOverview />
-
-      {/* 3. Total Number of Parking Lanes Breakdown */}
-      <LaneBreakdown
-        selectedLaneIndex={selectedLaneIndex}
-        onSelectLane={setSelectedLaneIndex}
-      />
-
-      {/* 4. Dashboard Workstation Navigation & Quick Floor Controls */}
-      <div className="glass-panel px-3 py-1.5 flex flex-wrap lg:flex-nowrap items-center justify-between gap-2 shrink-0 border border-slate-200 dark:border-white/10">
+    <div className="relative min-h-screen flex flex-col gap-2 pb-4">
+      {/* Workstation Navigation Tabs */}
+      <div className="glass-panel px-2.5 py-1.5 flex flex-wrap lg:flex-nowrap items-center justify-between gap-2 shrink-0 border border-slate-200 dark:border-white/10">
         {/* Left: View Switcher Tabs */}
         <div className="flex items-center gap-1">
           <div className="flex items-center gap-0.5 glass-panel p-0.5 border border-slate-200 dark:border-white/10">
@@ -161,58 +149,15 @@ export default function DetailedDashboardView() {
             </button>
           </div>
         </div>
-
-        {/* Right: Active Floor Switcher & Simulation Toggle */}
-        <div className="flex items-center gap-2 overflow-x-auto">
-          {/* Floor Switcher Pills */}
-          <div className="flex items-center gap-1">
-            {screens.map((scr) => {
-              const isCurrent = scr.id === activeScreenId;
-              return (
-                <button
-                  key={scr.id}
-                  onClick={() => {
-                    setActiveScreenId(scr.id);
-                    setSelectedLaneIndex(null);
-                  }}
-                  className={`px-2 py-0.5 text-[11px] font-semibold whitespace-nowrap transition flex items-center gap-1 ${
-                    isCurrent
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'glass-panel text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                  }`}
-                >
-                  <Layers className="w-3 h-3" />
-                  <span>{scr.name}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          <div className="h-4 w-px bg-slate-300 dark:bg-white/20 hidden sm:block" />
-
-          {/* Simulation Toggle */}
-          <button
-            onClick={() => setIsSimulationRunning(!isSimulationRunning)}
-            title={isSimulationRunning ? 'Pause Realtime Simulation' : 'Resume Realtime Simulation'}
-            className={`flex items-center gap-1 px-2.5 py-1 text-xs font-semibold transition ${
-              isSimulationRunning
-                ? 'bg-emerald-600 hover:bg-emerald-500 text-white'
-                : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
-            }`}
-          >
-            {isSimulationRunning ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-            <span className="hidden sm:inline">{isSimulationRunning ? 'Live Feed' : 'Paused'}</span>
-          </button>
-        </div>
       </div>
 
-      {/* 5. Primary Workstation Content Area */}
-      <div className="flex-1 min-h-[520px] flex flex-col">
+      {/* 3. Primary Workstation Content Area */}
+      <div className="flex-1 min-h-[500px] flex flex-col">
         {/* VIEW 1: LIVE FLOOR MAP & TELEMETRY INSPECTOR */}
         {activeDashboardView === 'MAP' && (
-          <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-2.5 min-h-[500px]">
+          <div className="flex-1 flex flex-col lg:flex-row items-stretch gap-2.5 min-h-[480px]">
             {/* Left: Master Interactive Floor Viewport */}
-            <div className="flex-1 min-w-0 h-[480px] lg:h-full flex flex-col relative">
+            <div className="flex-1 min-w-0 h-[460px] lg:h-full flex flex-col relative">
               <ParkingCanvas
                 sensors={activeScreenSensors}
                 searchQuery={searchQuery}
@@ -227,10 +172,10 @@ export default function DetailedDashboardView() {
             </div>
 
             {/* Right: Desktop Live Telemetry & Inspector Deck */}
-            <div className="w-full lg:w-[370px] xl:w-[410px] 2xl:w-[440px] shrink-0 flex flex-col gap-2 h-auto lg:h-full">
+            <div className="w-full lg:w-[320px] xl:w-[360px] 2xl:w-[400px] shrink-0 flex flex-col gap-2 h-auto lg:h-full">
               {/* Card 1: Active Bay & AI LPR Camera Telemetry */}
               {activeInspectedSensor ? (
-                <div className="glass-panel p-2.5 border border-slate-200 dark:border-white/10 shrink-0">
+                <div className="glass-panel p-2 border border-slate-200 dark:border-white/10 shrink-0">
                   <div className="flex items-center justify-between pb-1.5 border-b border-slate-200 dark:border-white/10">
                     <div className="flex items-center gap-2">
                       <div

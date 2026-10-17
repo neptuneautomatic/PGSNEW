@@ -24,7 +24,7 @@ export const initialScreens: Screen[] = [
   },
   {
     id: 'scr-1',
-    name: 'Basement 1 (B1)',
+    name: 'Basement 1',
     capacity: 28,
     dimensions: { width: 1400, height: 750 },
     controllerName: 'CONTROLLER_B1_MAIN',
@@ -32,7 +32,7 @@ export const initialScreens: Screen[] = [
   },
   {
     id: 'scr-2',
-    name: 'Basement 2 (B2)',
+    name: 'Basement 2',
     capacity: 24,
     dimensions: { width: 1400, height: 750 },
     controllerName: 'CONTROLLER_B2_WEST',
@@ -40,6 +40,14 @@ export const initialScreens: Screen[] = [
   },
   {
     id: 'scr-3',
+    name: 'Basement 3',
+    capacity: 38,
+    dimensions: { width: 1400, height: 750 },
+    controllerName: 'CONTROLLER_B3_CURVED',
+    description: 'Radial curved parking deck layout with multi-aisle sensors',
+  },
+  {
+    id: 'scr-4',
     name: 'Ground Floor (GF)',
     capacity: 16,
     dimensions: { width: 1400, height: 750 },
@@ -205,7 +213,86 @@ function generateSensors(): Sensor[] {
     });
   }
 
-  // Screen 3 (GF): 16 slots
+  // Screen 3 (Basement 3): 38 radial curved slots matching uploaded floor map
+  const b3Positions = [
+    // Cluster 1 (Left wing upper bays)
+    { x: 330, y: 175 },
+    { x: 360, y: 195 },
+    { x: 390, y: 220 },
+    { x: 420, y: 245 },
+    // Cluster 1 (Left wing lower bays)
+    { x: 340, y: 440 },
+    { x: 375, y: 460 },
+    { x: 410, y: 485 },
+    { x: 445, y: 510 },
+    // Cluster 2 (Left-Center upper bays)
+    { x: 500, y: 190 },
+    { x: 535, y: 205 },
+    { x: 505, y: 270 },
+    { x: 540, y: 285 },
+    // Cluster 2 (Left-Center lower bays)
+    { x: 520, y: 420 },
+    { x: 555, y: 435 },
+    { x: 535, y: 495 },
+    { x: 570, y: 510 },
+    // Cluster 3 (Center upper bays)
+    { x: 670, y: 190 },
+    { x: 705, y: 190 },
+    { x: 670, y: 265 },
+    { x: 705, y: 265 },
+    // Cluster 3 (Center lower bays)
+    { x: 675, y: 430 },
+    { x: 710, y: 430 },
+    { x: 680, y: 500 },
+    { x: 715, y: 500 },
+    // Cluster 4 (Right-Center upper bays)
+    { x: 840, y: 195 },
+    { x: 875, y: 180 },
+    { x: 845, y: 270 },
+    { x: 880, y: 255 },
+    // Cluster 4 (Right-Center lower bays)
+    { x: 835, y: 430 },
+    { x: 870, y: 415 },
+    { x: 840, y: 500 },
+    { x: 875, y: 485 },
+    // Cluster 5 (Right wing upper bays)
+    { x: 990, y: 220 },
+    { x: 1025, y: 245 },
+    { x: 1060, y: 270 },
+    // Cluster 5 (Right wing lower bays)
+    { x: 955, y: 450 },
+    { x: 990, y: 475 },
+    { x: 1025, y: 500 },
+  ];
+
+  for (let i = 1; i <= b3Positions.length; i++) {
+    const pos = b3Positions[i - 1];
+    const isOccupied = (i % 2 === 1 && i <= 30) || i === 36;
+    const isReserved = i === 1 || i === 38;
+    const status = isOccupied ? 1 : isReserved ? 2 : 0;
+
+    sensors.push({
+      id: `s-b3-${i}`,
+      screenId: 'scr-3',
+      sensorNum: i,
+      sensorName: `B3-${i.toString().padStart(2, '0')}`,
+      x: pos.x,
+      y: pos.y,
+      status,
+      controllerId: '3',
+      controllerType: 'PP3216R_TCP',
+      ipPort: '192.168.1.213:4001',
+      vehicleNo: isOccupied ? plates[(i + 4) % plates.length] : undefined,
+      occupiedSince: isOccupied
+        ? new Date(Date.now() - (i * 820000 + 400000)).toISOString()
+        : undefined,
+      reservedType: i === 1 ? 'Handicap' : i === 38 ? 'EV' : i === 11 || i === 12 ? 'VIP' : 'General',
+      ledColor: isOccupied ? 'RED' : isReserved ? 'BLUE' : 'GREEN',
+      cameraIpPort: `192.168.1.27${i % 8}:554`,
+    });
+  }
+
+  // Screen 4 (GF): 16 slots
   for (let i = 1; i <= 16; i++) {
     const colIndex = i - 1;
     const x = 150 + colIndex * 72;
@@ -215,13 +302,13 @@ function generateSensors(): Sensor[] {
 
     sensors.push({
       id: `s-gf-${i}`,
-      screenId: 'scr-3',
+      screenId: 'scr-4',
       sensorNum: i,
       sensorName: `GF-${i.toString().padStart(2, '0')}`,
       x,
       y,
       status,
-      controllerId: '3',
+      controllerId: '4',
       controllerType: 'PP3216R_TCP',
       ipPort: '192.168.1.212:4001',
       vehicleNo: isOccupied ? plates[(i + 5) % plates.length] : undefined,
@@ -369,11 +456,24 @@ export const initialConnections: Connection[] = [
     cameraIpPort: '192.168.1.250',
   },
   {
-    id: 'con-3',
-    name: 'GF Surface Controller 03',
-    ipPort: '192.168.1.212:4001',
+    id: 'con-b3',
+    name: 'B3 Radial Controller 03',
+    ipPort: '192.168.1.213:4001',
     controllerType: 'PP3216R_TCP',
     controllerId: '3',
+    preamble: 'NEPTUNE_B3',
+    startId: 1,
+    noOfSensors: 38,
+    remark: 'Basement 3 radial curved deck bus controller',
+    status: 'Online',
+    cameraIpPort: '192.168.1.270',
+  },
+  {
+    id: 'con-3',
+    name: 'GF Surface Controller 04',
+    ipPort: '192.168.1.212:4001',
+    controllerType: 'PP3216R_TCP',
+    controllerId: '4',
     preamble: 'NEPTUNE_GF',
     startId: 1,
     noOfSensors: 16,
@@ -437,6 +537,19 @@ export const initialDisplays: Display[] = [
     arrowDirection: 'RIGHT',
     status: 'Online',
     currentCount: 12,
+  },
+  {
+    id: 'disp-b3',
+    displayName: 'B3 Radial Guidance Sign',
+    displayModel: 'PP3216R_COLOR',
+    ipPort: '192.168.1.183:5005',
+    displayId: '4',
+    lineNo: 1,
+    screenName: 'Basement 3',
+    assignedSensors: ['s-b3-1', 's-b3-2', 's-b3-3', 's-b3-4'],
+    arrowDirection: 'RIGHT',
+    status: 'Online',
+    currentCount: 20,
   },
 ];
 
@@ -517,6 +630,17 @@ export const initialCameraSlots: CameraSlot[] = [
     imagePath: '/images/snapshots/cam_3.jpg',
     lastDetected: new Date(Date.now() - 5400000).toISOString(),
   },
+  {
+    id: 'cam-4',
+    camIpPort: '192.168.1.270:554',
+    slotName: 'B3-01',
+    slotId: 's-b3-1',
+    vehicleNo: 'DL-01-AB-1234',
+    confidence: 97.8,
+    status: 1,
+    imagePath: '/images/snapshots/cam_1.jpg',
+    lastDetected: new Date(Date.now() - 1200000).toISOString(),
+  },
 ];
 
 export const initialUsers: User[] = [
@@ -559,6 +683,8 @@ export const sampleLogs: OccupancyLog[] = [
   { id: 'log-5', timestamp: '2026-09-19 10:30:00', screenName: 'Basement 1 (B1)', slotName: 'B1-09', vehicleNo: 'UP-16-JK-7890', status: 'Occupied', durationMinutes: 35, groupType: 'Hour' },
   { id: 'log-6', timestamp: '2026-09-19 11:15:45', screenName: 'Basement 1 (B1)', slotName: 'B1-12', vehicleNo: 'GJ-01-LM-2345', status: 'Occupied', durationMinutes: 20, groupType: 'Hour' },
   { id: 'log-7', timestamp: '2026-09-19 11:40:18', screenName: 'Basement 2 (B2)', slotName: 'B2-08', vehicleNo: 'TN-09-NP-6789', status: 'Occupied', durationMinutes: 15, groupType: 'Hour' },
+  { id: 'log-8', timestamp: '2026-09-19 12:10:00', screenName: 'Basement 3', slotName: 'B3-01', vehicleNo: 'DL-01-AB-1234', status: 'Occupied', durationMinutes: 50, groupType: 'Hour' },
+  { id: 'log-9', timestamp: '2026-09-19 12:25:00', screenName: 'Basement 3', slotName: 'B3-15', vehicleNo: 'HR-26-GH-3456', status: 'Occupied', durationMinutes: 30, groupType: 'Hour' },
 ];
 
 export const initialCameraDevices: CameraDevice[] = [
